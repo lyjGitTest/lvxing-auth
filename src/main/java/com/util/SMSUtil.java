@@ -23,7 +23,7 @@ public class SMSUtil {
         Date date=new Date();
         long datetime=date.getTime();
         //保留后四位数字为验证码
-        String val="1111"+datetime;
+        String val=""+datetime;
         String smsck=val.substring(val.length()-4,val.length());
         System.out.println("验证码-->"+smsck);
         HashMap<String,Object> result = ccPRestSmsSDK.sendTemplateSMS("15991902936","1" ,new String[]{smsck,"2"});

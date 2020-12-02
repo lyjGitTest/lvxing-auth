@@ -9,4 +9,6 @@ public interface IUserSerivce {
     public  boolean insert(ItripUser itripUser);
     //修改用户状态
     public int updateActivated(ItripUser itripUser);
+    //登陆
+    public boolean dologin(ItripUser itripUser);
 }

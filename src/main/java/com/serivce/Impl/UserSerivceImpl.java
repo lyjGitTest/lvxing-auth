@@ -20,6 +20,7 @@ private ItripUserMapper itripUserMapper;
     public void setItripUserMapper(ItripUserMapper itripUserMapper) {
         this.itripUserMapper = itripUserMapper;
     }
+
     @Override
     public ItripUser findByUserCode(ItripUser itripUser) {
        return itripUserMapper.findByUserCode(itripUser);
@@ -37,5 +38,10 @@ private ItripUserMapper itripUserMapper;
     @Override
     public int updateActivated(ItripUser itripUser) {
         return itripUserMapper.updateActivated(itripUser);
+    }
+
+    @Override
+    public boolean dologin(ItripUser itripUser) {
+        return itripUserMapper.dologin(itripUser);
     }
 }

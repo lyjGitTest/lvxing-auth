@@ -19,6 +19,8 @@ public interface ItripUserMapper {
     int updateByPrimaryKey(ItripUser record);
     /**通过手机号或邮箱号确认该用户是否注册过**/
     public ItripUser findByUserCode(ItripUser itripUser);
-    /*激活账户*/
-public int updateActivated(ItripUser itripUser);
+    /**手机号激活账户*/
+     public int updateActivated(ItripUser itripUser);
+     /**登陆*/
+     public boolean dologin(ItripUser itripUser);
 }
