@@ -13,8 +13,8 @@ public class EmailUtil {
     private static String emailck=null;
     public static String emailregister(ItripUser user) {
         try {
-            String account = "wangsanfengk@163.com";            //替换为发件人账号
-            String password = "VKGHGACJBXFMURWZ";                    //替换为发件人账号密码
+            String account = "lyjtest2020@163.com";            //替换为发件人账号
+            String password = "NFPOJZLTRPJPANZE";                    //替换为发件人账号密码
             String receiveMailAccount = user.getUsercode();    //替换为收件人账号
             // 1. 使用Properties对象封装连接所需的信息
             Properties props = new Properties();                    // 参数配置
