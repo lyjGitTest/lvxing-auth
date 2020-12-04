@@ -22,5 +22,5 @@ public interface ItripUserMapper {
     /**手机号激活账户*/
      public int updateActivated(ItripUser itripUser);
      /**登陆*/
-     public boolean dologin(ItripUser itripUser);
+     public ItripUser dologin(ItripUser itripUser);
 }

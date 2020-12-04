@@ -1,7 +1,10 @@
 package com.util;
 
 import com.po.ItripUser;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
+import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -10,6 +13,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class EmailUtil {
+    private JavaMailSender mailSender;
     private static String emailck=null;
     public static String emailregister(ItripUser user) {
         try {
@@ -67,6 +71,21 @@ public class EmailUtil {
         // 7. 保存设置
         message.saveChanges();
         return message;
+    }
+    public void sendMail(String to,String subject,String content){
+
+        try {
+            MimeMessage message=mailSender.createMimeMessage();
+            MimeMessageHelper helper=new MimeMessageHelper(message);
+            helper.setFrom("lyjtest2020@163.com");
+            helper.setTo("3035195148@qq.com");
+            helper.setSubject("主题：XX");
+            helper.setText("内容：你好");
+            mailSender.send(helper.getMimeMessage());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
     }
 }
 

@@ -219,7 +219,7 @@
         update itrip_user set activated=1 where usercode=#{usercode}
     </update>
 
-  <select id="dologin" parameterType="com.po.ItripUser" resultMap="BaseResultMap">
+  <select id="dologin" parameterType="com.po.ItripUser" resultType="com.po.ItripUser">
         select * from  itrip_user  where usercode=#{usercode} and userpassword=#{userpassword} and activated=1
   </select>
 

@@ -41,7 +41,7 @@ private ItripUserMapper itripUserMapper;
     }
 
     @Override
-    public boolean dologin(ItripUser itripUser) {
+    public ItripUser dologin(ItripUser itripUser) {
         return itripUserMapper.dologin(itripUser);
     }
 }
