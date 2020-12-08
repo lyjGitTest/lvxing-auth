@@ -4,7 +4,6 @@ package com.util;
 import com.po.ItripUser;
 import cz.mallat.uasparser.UserAgentInfo;
 import redis.clients.jedis.Jedis;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

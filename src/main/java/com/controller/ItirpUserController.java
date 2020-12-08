@@ -77,7 +77,7 @@ public class ItirpUserController {
     public Dto validatephone(HttpServletRequest request, HttpServletResponse response, String user,String code){
         System.out.println("激活方法进入。。。");
 
-System.out.println("user"+user);
+        System.out.println("user"+user);
         System.out.println("code"+code);
         System.out.println("jedis.get(user)"+jedis.get(user));//null
         System.out.println("jedis.get(code)"+jedis.get(code));//null*//*
@@ -145,6 +145,7 @@ System.out.println("user"+user);
                 //用户添加成功，发送激活码
              String checkma= EmailUtil.emailregister(itripUser);
                 jedis.setex(itripUser.getUsercode(),120,checkma);
+                System.out.println("jedis"+jedis.get(itripUser.getUsercode()));
                 return DtoUtil.returnSuccess();
             } else {
                 return DtoUtil.returnFail("邮箱注册失败", ErrorCode.AUTH_UNKNOWN);

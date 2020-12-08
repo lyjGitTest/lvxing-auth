@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
+
 
 @RestController
 @RequestMapping(value = "/api")
@@ -39,30 +39,34 @@ public class ItirpUserLoginController {
             ItripUser user = iUserSerivce.dologin(new ItripUser(name.trim(), MD5Util.getMd5(password.trim(), 32)));
             if (EmptyUtils.isNotEmpty(user)) {
                 //不为空，数据库里有值登陆成功
-                //将name作为key,存入redis
+                //查看redis中有没有token,将name作为key
                 String redisrtoken = jedis.get(name);
                 //判断用户redis有效期中有没有登陆但未注销
+                System.out.println("111"+redisrtoken);
                 if (EmptyUtils.isEmpty(redisrtoken)) {
-                    //redis的tocken为空，未登录状态
+                    //redis的token为空，未登录状态
                     System.out.println("该用户在短时间内处于未登录状态");
-                    //生成tocken
+                    //http头 生成token
                     String token = TokenUtil.getTokenGenerator(request.getHeader("user-agent"), user);
                     //token存入redis
                     //判断前缀字符串
                     if (token.startsWith("token:PC-")) {
                         String userjson = JSON.toJSONString(user);
                         System.out.println("userjson"+userjson);
+                        //将token为key存入user
+                        //将name为key存入token
                         jedis.setex(token, 3600, userjson);
                         jedis.setex(name, 3600, token);
                     }
                     //获得当前系统时间
                     ItripTokenVO tokenVO = new ItripTokenVO(token, Calendar.getInstance().getTimeInMillis() + 60 * 60 * 1000, Calendar.getInstance().getTimeInMillis());
+                    System.out.println("token===="+token);
                     return DtoUtil.returnDataSuccess(tokenVO);
                 } else {
                     //有效时间内处于登陆状态
                     try {
                         String newtocken = TokenUtil.replaceToken(request.getHeader("user-agent"), redisrtoken, user);
-                        //删除redis的tocken,删除以name作为key存放的值
+                        //删除redis的token,删除以name作为key存放的值
                         jedis.del(redisrtoken);
                         jedis.del(name);
                         //缓存新的tocken在redis
@@ -72,6 +76,7 @@ public class ItirpUserLoginController {
                             jedis.setex(name, 3600, newtocken);
                         }
                         ItripTokenVO tokenVO = new ItripTokenVO(newtocken, Calendar.getInstance().getTimeInMillis() + 60 * 60 * 1000, Calendar.getInstance().getTimeInMillis());
+                        System.out.println("tockenvo"+tokenVO);
                         return DtoUtil.returnDataSuccess(tokenVO);
                     } catch (TokenValidationFailedException e) {
                         return DtoUtil.returnFail(e.getMessage(), ErrorCode.AUTH_TOCKEN_EXCEPTION);
