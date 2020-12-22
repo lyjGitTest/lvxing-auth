@@ -79,7 +79,7 @@ public class ItirpUserLoginController {
                         System.out.println("tockenvo"+tokenVO);
                         return DtoUtil.returnDataSuccess(tokenVO);
                     } catch (TokenValidationFailedException e) {
-                        e.printStackTrace();
+                        e.getMessage();
                         return DtoUtil.returnFail("系统异常", ErrorCode.AUTH_TOCKEN_EXCEPTION);
                     }
                 }
