@@ -69,7 +69,8 @@ public class ItirpUserController {
 
             }
         } catch (Exception e) {
-            return DtoUtil.returnFail(e.getMessage(), ErrorCode.AUTH_UNKNOWN);
+            e.printStackTrace();
+            return DtoUtil.returnFail("系统异常", ErrorCode.AUTH_UNKNOWN);
         }
     }
     //手机激活
